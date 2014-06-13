@@ -3,7 +3,7 @@
 import sys
 
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-SHIFTED  = "DEFGHIJKLMNOPQRSTUVWXYZABC"
+SHIFTED  = None
 
 def main():
 	"""
@@ -11,6 +11,19 @@ def main():
 
 	Everything starts here.
 	"""
+	while True:
+		n = int(raw_input('Enter an integer >= 0: '))
+		if n >= 0:
+			# We had a valid input, exit this loop
+			break
+		else:
+			# Invalid input so let the user know and try again
+			print "Incorrect value was provided: {}".format(n)
+	# Generate the shifted alphabet
+	SHIFTED = rotateAlphabet(n)
+	# Print out the shifted alphabet
+	print "Shifted Alphabet: {}".format(SHIFTED)
+	# Start the main loop for the program
 	running = True
 	while running:
 		while True:
@@ -40,6 +53,42 @@ def main():
 		# Determine if the user wants to run again
 		running = option.upper() == 'Y'
 	print "Exiting.."
+
+def rotateAlphabet(n):
+	"""
+	Creates a shifted alphabet to use for 
+	encryption an decryption.
+	@param n Amount to shift the alphabet by.
+	@return Returns a string containing the shifted alphabet.
+	"""
+	# Bound the value entered by 26
+	n = n % 26
+	# Counter to keep track of how many letters generated
+	i = 0
+	# String to store new alphabet
+	alphabet = ""
+	for i in range(0, 26):
+		# 0 <= n <= 25
+		n = n % 26
+		'''
+		ord(c) converts an ASCII character to its numeric ASCII value.
+		Ex: ord('A') = 65
+
+		Then add the offset of n which is a value [0, 25]
+		Ex: n = 3 
+		ord('A') + n = 68 
+		68 is the decimal ASCII value of D 
+
+		chr(d) converts an integer value back to its ASCII form.
+		chr(68) = 'D'
+		
+		Then append this to the alphabet string.
+		'''
+		alphabet += chr(ord('A') + n)
+		# Increment n by one to generate the next letter in alphabet
+		n += 1
+	return alphabet
+
 
 def encrypt():
 	"""
