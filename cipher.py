@@ -8,14 +8,26 @@ def main():
 
 	Everything starts here.
 	"""
-	table = generateTable()
+	shift_amount = 0
+	while True:
+		shift_amount = int(raw_input('Please enter a number between [0, 25]: '))
+		if shift_amount >= 0 and shift_amount <= 25:
+			# The value was an accepted value, so break
+			break
+		else:
+			print "Incorrect value provided: {}".format(shift_amount)
+	# Generate the table with the provided shift amount
+	table = generateTable(shift_amount)
+	# Print the newly generated table
 	printTable(table)
 
-def generateTable():
+def generateTable(n=0):
 	"""
 	Generates a table known as a "Tabula Recta"
 	This table is 26 different rotations of the 
 	English alphabet.
+
+	n defaults to zero which maps to the letter A
 
 	Example rows:
 	A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
@@ -28,7 +40,6 @@ def generateTable():
 	.
 	Z A B C D E F G H I J K L M N O P Q R S T U V W X Y
 	"""
-	n = 0  # Start with the letter A
 	table = [] # Create a list
 	# 26 letters in the English alphabet so create 26 rows 
 	for i in range(0, 26):
