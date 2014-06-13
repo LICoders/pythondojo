@@ -2,8 +2,8 @@
 
 import sys
 
-ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-SHIFTED  = "NOPQRSTUVWXYZABCDEFGHIJKLM"
+ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+SHIFTED  = "DEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABC"
 
 def main():
 	"""
@@ -48,35 +48,20 @@ def encrypt():
 	@return Returns the encrypted text.
 	"""
 	plaintext = raw_input('Please enter a string to encrypt: ')
-	# Remove all whitespace from the string; Trick from http://stackoverflow.com/a/3739939
-	# plaintext = "".join(plaintext.split())
-	# Convert all text to uppercase
-	plaintext = plaintext.upper()
 	# Loop through each character in the string and replace it with the correct substitution
 	ciphertext = ""
 	for character in plaintext:
-		# Check to see if we have a letter [A-Z]
-		if character.isalpha():
+		# Check to see if we have a letter or digit [A-Z][a-z][0-9]
+		if character.isalnum():
 			"""
-			ord(c) converts an ASCII character to its ASCII value.
-			Ex: ord('A') = 65
-
-			The line ord(character) - ord(ALPHABET[0]) will take the ASCII 
-			value of the character and subtract it by the ASCII value 
-			of the first character of ALPHABET which is 'A'. This will give 
-			us a value from [0, 26) which can be mapped to the SHIFTED list.
-
-			Example:
-
-			In the Caesar cipher A should map to D
-			ord('A') - ord('A') 
-			65 - 65 = 0
-			encrypted_character = SHIFTED[0]
-			SHIFTED[0] is the letter 'D' 
+			Uses the index function of a string to find the 
+			integer position of the character in ALPHABET
+			and grab the character in SHIFTED at that same index. 
 			""" 
-			ciphertext += SHIFTED[ord(character) - ord(ALPHABET[0])]
+			ciphertext += SHIFTED[ALPHABET.index(character)]
+
 		else:
-			# if its not a letter [A-Z] just append it to the string
+			# if its not a letter or digit [A-Z][a-z][0-9] just append it to the string
 			ciphertext += character
 	return ciphertext
 
@@ -87,35 +72,19 @@ def decrypt():
 	@return Returns the decrypted text.
 	"""
 	ciphertext = raw_input('Please enter a string to decrypt: ')
-	# Remove all whitespace from the string; Trick from http://stackoverflow.com/a/3739939
-	# ciphertext = "".join(ciphertext.split())
-	# Convert all text to uppercase
-	ciphertext = ciphertext.upper()
 	# Loop through each character in the string and replace it with the correct substitution
 	plaintext = ""
 	for character in ciphertext:
-		# Check to see if we have a letter [A-Z]
-		if character.isalpha():
+		# Check to see if we have a letter or digit [A-Z][a-z][0-9]
+		if character.isalnum():
 			"""
-			ord(c) converts an ASCII character to its ASCII value.
-			Ex: ord('A') = 65
-
-			The line ord(character) - ord(SHIFTED[0]) will take the ASCII 
-			value of the character and subtract it by the ASCII value 
-			of the first character of SHIFTED which is 'D'. This will give 
-			us a value from [0, 26) which can be mapped to the ALPHABET list.
-
-			Example:
-
-			In the Caesar cipher decrypt function D should map to A
-			ord('D') - ord('D') 
-			68 - 68 = 0
-			decrypted_character = ALPHABET[0]
-			ALPHABET[0] is the letter 'A' 
+			Uses the index function of a string to find the 
+			integer position of the character in SHIFTED
+			and grab the character in ALPHABET at that same index. 
 			""" 
-			plaintext += ALPHABET[ord(character) - ord(SHIFTED[0])]
+			plaintext += ALPHABET[SHIFTED.index(character)]
 		else:
-			# if its not a letter [A-Z] just append it to the string
+			# if its not a letter or digit [A-Z][a-z][0-9] just append it to the string
 			plaintext += character
 	return plaintext
 
