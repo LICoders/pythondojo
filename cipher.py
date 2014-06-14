@@ -11,6 +11,7 @@ def main():
 
 	Everything starts here.
 	"""
+	global SHIFTED
 	while True:
 		n = int(raw_input('Enter an integer >= 0: '))
 		if n >= 0:
